@@ -12,6 +12,9 @@ require_once 'abstract.php';
 class Mage_Shell_Migrator extends Mage_Shell_Abstract
 {
 
+    /**
+     * Run script
+     */
     public function run()
     {
         if ($this->getArg('module')) {
@@ -35,29 +38,36 @@ Unable to delete core_resource db entry for $moduleName.
 MESSAGE;
                 }
             }
-        else if ($this->getArg('to')) {
-            $toVer = $this->getArg('to');
-            $result = $res->getConnection()
-                    ->update(
-                        $res->getTable('core_resource'),
-                        array('version' => $toVer, 'data_version' => $toVer),
-                        "code = '$res->resourceName'"
-                    );
-            if ($result){
-                echo <<<MESSAGE
+            else if ($this->getArg('to')) {
+                $toVer = $this->getArg('to');
+                $result = $res->getConnection()
+                        ->update(
+                            $res->getTable('core_resource'),
+                            array('version' => $toVer, 'data_version' => $toVer),
+                            "code = '$res->resourceName'"
+                        );
+                if ($result){
+                    echo <<<MESSAGE
 $moduleName migrated to $toVer succesfully.
 
 MESSAGE;
-            } else {
-                echo <<<MESSAGE
+                } else {
+                    echo <<<MESSAGE
 Unable to migrate $moduleName to $toVer.
 
 MESSAGE;
+                }
             }
+            $res->getConnection()->endSetup();
         }
-      }
     }
 
+    /**
+     * Get module resource
+     *
+     * @param string $moduleName
+     * @return class|boolean
+     */
     public function getModuleResource($moduleName)
     {
         $resources = Mage::getConfig()->getNode('global/resources')->children();
@@ -68,6 +78,8 @@ MESSAGE;
             if ($resource->setup->module == $moduleName) {
                 $class = (string) $resource->setup->class;
                 $res = new $class($resName);
+                //workaround : object has _resourceName
+                //but we need it public
                 $res->resourceName = $resName;
 
                 return $res;
@@ -92,7 +104,6 @@ Usage:  php migrator.php -- [options]
 
 USAGE;
     }
-
 }
 
 $shell = new Mage_Shell_Migrator();
