@@ -98,7 +98,7 @@ MESSAGE;
         return <<<USAGE
 Usage:  php migrator.php -- [options]
 
-  --module <module> --reset             Show current version of <module> (as in core_resource)
+  --module <module> --reset             Delete <module> resource name entry from core_resource
   --module <module> --to <version>      Migrate module in database to <version> (in core_resource)
   help                                  This help
 
