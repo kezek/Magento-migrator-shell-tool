@@ -26,12 +26,10 @@ Basic usage of a Magento Shell Tool can be easily research by doing a Google sea
 is no different.
 
     Usage:  php migrator.php -- [options]
-
-  --module <module> --reset             Show current version of <module> (as in core_resource)
-  --module <module> --to <version>      Migrate module in database to <version> (in core_resource)
-  help                                  This help
+    --module <module> --reset             Show current version of <module> (as in core_resource)
+    --module <module> --to <version>      Migrate module in database to <version> (in core_resource)
+    help                                  This help
     
-
 Requirements
 -------------------
 
