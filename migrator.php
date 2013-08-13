@@ -24,7 +24,7 @@ class Mage_Shell_Migrator extends Mage_Shell_Abstract
             if ($this->getArg('reset')) {
                 $result = $res->getConnection()
                         ->delete(
-                        $res->getTable('core_resource'), "code = '$res->resourceName'"
+                        $res->getTable('core_resource'), "code = '{$res->resourceName}'"
                 );
                 if ($result) {
                     echo <<<MESSAGE
@@ -44,7 +44,7 @@ MESSAGE;
                         ->update(
                             $res->getTable('core_resource'),
                             array('version' => $toVer, 'data_version' => $toVer),
-                            "code = '$res->resourceName'"
+                            "code = '{$res->resourceName}'"
                         );
                 if ($result){
                     echo <<<MESSAGE
