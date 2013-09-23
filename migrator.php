@@ -77,6 +77,9 @@ MESSAGE;
             }
             if ($resource->setup->module == $moduleName) {
                 $class = (string) $resource->setup->class;
+                if (!$class){
+                    $class = 'Mage_Core_Model_Resource_Setup';
+                }
                 $res = new $class($resName);
                 //workaround : object has _resourceName
                 //but we need it public
